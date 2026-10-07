@@ -1,0 +1,78 @@
+# Publications listed on /publications/, grouped under one heading per `year`.
+# Keep entries newest first; the page shows them in this order.
+#
+#   title      paper title
+#   year       year heading the paper is listed under (required)
+#   authors    author names in order; your own name (author.name in _config.yml) is
+#              underlined automatically. A † or * in a name becomes a superscript mark.
+#   note       optional small line under the authors (e.g. what the marks mean)
+#   venue      venue line, shown in italics
+#   image      thumbnail path under images/ (a gray placeholder shows while the file is missing)
+#   image_alt  optional alt text for the thumbnail (empty = decorative, the title is next to it)
+#   pdf        link for the PDF button; leave it empty and the button is shown grayed out
+#   abstract   text the Abstract button opens; leave it empty and the button is shown grayed out.
+#              Write it as "abstract: |-" followed by the text on indented lines (as below), so colons
+#              and quotes are safe. Markdown works (*italic*, [link](url)); a blank line starts a new paragraph
+#   code       optional link for a Code button (no button when empty)
+#   links      optional extra buttons after these, each with a label and a url (e.g. Poster, Slides)
+
+- title: "When to Probe and When to Act: Clarity-Aware Risk-Adaptive Control for Interactive Driving"
+  year: 2026
+  authors:
+    - "Youran Wang†"
+    - "Devodita Chakravarty†"
+    - "Yiwei Lyu*"
+  note: "† Equal contribution, * Corresponding author"
+  venue: "Under review at ICRA 2027"
+  image: "publications/probe_act.png"
+  pdf:        # TODO: no PDF yet; the PDF button stays gray until a link is added here
+  abstract: |-
+    Safe navigation in interactive traffic requires autonomous vehicles to reason about unobservable
+    human characteristics and the reciprocal nature of multi-agent interactions. Traditional
+    architectures often decouple prediction from planning, leading to the "Frozen Robot Problem" or
+    unsafe maneuvers under high ambiguity because they treat risk assessment and information acquisition
+    as independent objectives. We argue that the notion of safety should not remain static but must
+    instead dynamically co-evolve with the system's internal confidence: the robot should actively
+    clarify ambiguity when necessary while also recognizing the diminishing returns of information, and
+    naturally transition toward task execution. We introduce a unified belief-space Model Predictive
+    Control (MPC) framework that couples multistep information planning with a clarity-adaptive
+    Conditional Value-at-Risk (CVaR) barrier mechanism. By treating clarity, a scalar informational
+    state, as an explicit planning variable, the controller co-designs its probing strategy with its
+    safety specification, tightening conservatism under high ambiguity and relaxing constraints as
+    confidence improves. We further provide a performance analysis showing that the cost of information
+    seeking and the expected planning-cost gap to a controller that knows the true human characteristic
+    are bounded by residual ambiguity and solver error. We evaluate the framework in lane-merging and
+    unsignalized-intersection scenarios against representative interactive-planning baselines. Across
+    5,000 simulations, the proposed method achieves the highest success rates (94.6% and 93.2%) and the
+    lowest collision rates (1.2% and 1.4%) among the compared methods, providing a principled foundation
+    for robust decision-making in human-centric environments.
+
+- title: "Geospatial Diffusion-based Evolution Synthesis (GeoDES) for Storm-Centered Weather Augmentation"
+  year: 2026
+  authors:
+    - "Sonia Cromp"
+    - "Satya Sai Srinath Namburi GNVV"
+    - "Youran Wang"
+    - "Grace Kisslinger"
+    - "Frederic Sala"
+    - "James Booth"
+    - "Allegra LeGrande"
+  venue: "Under review at ICLR 2027. 2025 Meeting of the American Meteorological Society (AMS)"
+  image: "publications/geodes.png"
+  pdf: "https://arxiv.org/pdf/2607.19522"   # PDF of the [Paper] link in the resume (https://arxiv.org/abs/2607.19522)
+  abstract: |-
+    Geospatial synthesis models are designed to generate realistic environmental conditions, yet they
+    often struggle to capture the detailed dynamics of Location-Sparse Phenomena (LSP): complex events
+    like storms, wildfires and oil spills that occur sparsely and irregularly across the globe. Existing
+    approaches frequently rely on structural simplifications, such as restrictive static regional
+    boundaries or computationally expensive, overly smoothed global grids. Instead, we introduce
+    *Geospatial Diffusion-based Evolution Synthesis (GeoDES)*, a phenomenon-centered spatiotemporal
+    diffusion model. GeoDES' correlated noise schedule, non-autoregressive design and temporal inflative
+    training paradigm serve to increase fidelity and decrease compute requirements for LSP. GeoDES
+    efficiently synthesizes high-quality events to augment hazard datasets and stress-test downstream
+    models. On extratropical cyclone generation tasks, GeoDES outperforms baselines by achieving 21% lower
+    Peak Vorticity Error and 26% higher Synoptic Anomaly Correlation Coefficient. Additionally,
+    evaluations on the xBD multi-disaster dataset demonstrate high fidelity, with 41.27 lower Fréchet
+    Inception Distance than the next-best method. GeoDES brings realistic synthesis to the broad class of
+    LSP and offers a step towards robust geospatial data augmentation.
+  code: "https://github.com/soCromp/geodes"

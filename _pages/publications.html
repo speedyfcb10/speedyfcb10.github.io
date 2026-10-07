@@ -6,31 +6,28 @@ author_profile: true
 ---
 
 {% if site.author.googlescholar %}
-  <div class="wordwrap">You can also find my articles on <a href="{{site.author.googlescholar}}">my Google Scholar profile</a>.</div>
+  <p class="pub-intro">You can also find my publications on <a href="{{ site.author.googlescholar }}"><i class="ai ai-google-scholar" aria-hidden="true"></i><span>Google Scholar</span></a>.</p>
 {% endif %}
 
-{% include base_path %}
-
-<!-- New style rendering if publication categories are defined -->
-{% if site.publication_category %}
-  {% for category in site.publication_category  %}
-    {% assign title_shown = false %}
-    {% for post in site.publications reversed %}
-      {% if post.category != category[0] %}
-        {% continue %}
-      {% endif %}
-      {% unless title_shown %}
-        <h2>{{ category[1].title }}</h2><hr />
-        {% assign title_shown = true %}
-      {% endunless %}
-      {% include archive-single.html %}
+{% assign pubs_by_year = site.data.publications | group_by: "year" %}
+{% for year in pubs_by_year %}
+  <h2 class="pub-year">{{ year.name | default: "Other" }}</h2>
+  <div class="pub-list">
+    {% for pub in year.items %}
+      {% include publication-card.html pub=pub %}
     {% endfor %}
-  {% endfor %}
-{% else %}
-  {% for post in site.publications reversed %}
-    {% include archive-single.html %}
-  {% endfor %}
-{% endif %}
+  </div>
+{% endfor %}
 
-
-
+{% comment %} Abstract buttons open and close the abstract under them. Use /* */ comments only:
+   the compress layout joins the page onto one line. {% endcomment %}
+<script>
+  document.addEventListener('click', function (event) {
+    var button = event.target.closest('[data-abstract-toggle]');
+    if (!button) { return; }
+    var panel = document.getElementById(button.getAttribute('aria-controls'));
+    var open = button.getAttribute('aria-expanded') === 'true';
+    button.setAttribute('aria-expanded', open ? 'false' : 'true');
+    panel.hidden = open;
+  });
+</script>

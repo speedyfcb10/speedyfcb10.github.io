@@ -1,0 +1,35 @@
+---
+layout: archive
+title: "Curriculum Vitae"
+permalink: /cv/
+author_profile: true
+last_update: "October 2026"   # the current PDF was built on 2026-10-07; update this when you replace the file
+---
+
+{% comment %} The PDF is the file set as author.cv in _config.yml {% endcomment %}
+{% assign cv_url = site.author.cv | strip %}
+{% assign cv_found = false %}
+{% if cv_url contains "://" %}
+  {% assign cv_found = true %}
+{% elsif cv_url != "" %}
+  {% assign cv_head = cv_url | slice: 0 %}
+  {% if cv_head != "/" %}{% assign cv_url = cv_url | prepend: "/" %}{% endif %}
+  {% assign cv_file = site.static_files | where: "path", cv_url | first %}
+  {% if cv_file %}{% assign cv_found = true %}{% endif %}
+{% endif %}
+
+{% if page.last_update %}
+  <p class="cv-updated">Last update: {{ page.last_update }}</p>
+{% endif %}
+
+{% if cv_found %}
+  <p><a class="cv-download" href="{{ cv_url | absolute_url }}" target="_blank" rel="noopener"><i class="fas fa-file-pdf" aria-hidden="true"></i>Download CV (PDF)</a></p>
+  <p class="cv-mobile-note">The preview is hidden on small screens. Use the button above to open the PDF.</p>
+  <div class="cv-preview">
+    <iframe src="{{ cv_url | absolute_url }}" title="Curriculum vitae of {{ site.author.name }} (PDF)">
+      <a href="{{ cv_url | absolute_url }}">Open the CV (PDF)</a>
+    </iframe>
+  </div>
+{% else %}
+  <div class="cv-preview cv-preview--missing"><span class="img-placeholder" aria-hidden="true"><i class="fas fa-file-pdf" aria-hidden="true"></i></span></div>
+{% endif %}

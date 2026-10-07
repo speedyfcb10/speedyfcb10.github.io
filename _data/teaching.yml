@@ -1,0 +1,16 @@
+# Teaching entries listed on /teaching/, newest first.
+#
+#   role          position (and course), shown as the card title
+#   organization  department or unit, shown in italics
+#   dates         shown on the right
+#   description   one or two sentences
+
+- role: "Math Grader, Linear Algebra (Math 341)"
+  organization: "Department of Mathematics, UW–Madison"
+  dates: "Fall 2026"
+  description: "Grade exams and quizzes for proof-based linear algebra."
+
+- role: "Course Assistant & Peer Mentor"
+  organization: "Math Learning Center, UW–Madison"
+  dates: "Sep 2025 – May 2026"
+  description: "Course assistant for proof-based Linear Algebra (Math 341) and Number Theory (Math 467), leading office hours and mentoring students on proof techniques; in-class peer mentor for precalculus courses."

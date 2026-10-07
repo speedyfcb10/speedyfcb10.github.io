@@ -1,0 +1,22 @@
+{%- comment -%}
+  Research experience list on the home page; entries live in _data/experience.yml.
+{%- endcomment -%}
+<div class="about-card">
+  <ul class="exp-list">
+    {%- for item in site.data.experience %}
+    <li class="exp-list__item">
+      <div class="exp-list__head">
+        <span class="exp-list__org">{{ item.institution | escape }}</span>
+        <span class="exp-list__dates">{{ item.dates | escape }}</span>
+      </div>
+      {%- if item.advisor %}
+      {%- assign advisor_url = item.advisor_url | strip %}
+      <div class="exp-list__advisor">Advisor: {% if advisor_url != "" %}<a href="{{ advisor_url | absolute_url }}">{{ item.advisor | escape }}</a>{% else %}{{ item.advisor | escape }}{% endif %}</div>
+      {%- endif %}
+      {%- if item.description %}
+      <p class="exp-list__desc">{{ item.description | markdownify | remove: "<p>" | remove: "</p>" | strip }}</p>
+      {%- endif %}
+    </li>
+    {%- endfor %}
+  </ul>
+</div>

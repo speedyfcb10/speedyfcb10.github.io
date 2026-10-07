@@ -1,0 +1,31 @@
+{%- comment -%}
+  An image that falls back to a neat gray placeholder box when the file is missing.
+
+  Usage: {% include image-with-placeholder.html src="publications/geodes.png" alt="..." %}
+    src            path under images/ ("profile.png" and "images/profile.png" both work) or a full URL
+    alt            alt text; leave empty for decorative images
+    icon           Font Awesome icon shown in the placeholder (default "fa-image")
+    fetchpriority  "high" for above-the-fold images; other images load lazily
+
+  Local files are looked up at build time, so a file that has not been uploaded yet
+  never renders as a broken image. The onerror handler covers full URLs and files
+  the browser cannot decode.
+{%- endcomment -%}
+{%- include base_path -%}
+{%- assign iwp_src = nil -%}
+{%- assign iwp_in = include.src | strip -%}
+{%- if iwp_in contains "://" -%}
+  {%- assign iwp_src = iwp_in -%}
+{%- elsif iwp_in != "" -%}
+  {%- assign iwp_head = iwp_in | slice: 0 -%}
+  {%- if iwp_head == "/" -%}{%- assign iwp_in = iwp_in | remove_first: "/" -%}{%- endif -%}
+  {%- assign iwp_head = iwp_in | slice: 0, 7 -%}
+  {%- if iwp_head == "images/" -%}{%- assign iwp_in = iwp_in | remove_first: "images/" -%}{%- endif -%}
+  {%- assign iwp_path = iwp_in | prepend: "/images/" -%}
+  {%- assign iwp_file = site.static_files | where: "path", iwp_path | first -%}
+  {%- if iwp_file -%}{%- assign iwp_src = base_path | append: iwp_path -%}{%- endif -%}
+{%- endif -%}
+{%- if iwp_src -%}
+<img src="{{ iwp_src }}" alt="{{ include.alt | escape }}"{% if include.fetchpriority %} fetchpriority="{{ include.fetchpriority }}"{% else %} loading="lazy"{% endif %} onerror="this.onerror=null;this.hidden=true;this.nextElementSibling.hidden=false;">
+{%- endif -%}
+<span class="img-placeholder"{% if iwp_src %} hidden{% endif %}{% if include.alt and include.alt != "" %} role="img" aria-label="{{ include.alt | escape }}"{% else %} aria-hidden="true"{% endif %}><i class="fas {{ include.icon | default: 'fa-image' }}" aria-hidden="true"></i></span>

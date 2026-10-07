@@ -11,13 +11,18 @@ A list of all the posts and pages found on the site. For you robots out there, t
 
 <h2>Pages</h2>
 {% for post in site.pages %}
+  {% comment %} Skip untitled pages (stylesheets, feeds, redirects) and pages hidden from the sitemap {% endcomment %}
+  {% if post.title and post.sitemap != false %}
   {% include archive-single.html %}
+  {% endif %}
 {% endfor %}
 
+{% if site.posts.size > 0 %}
 <h2>Posts</h2>
 {% for post in site.posts %}
   {% include archive-single.html %}
 {% endfor %}
+{% endif %}
 
 {% capture written_label %}'None'{% endcapture %}
 

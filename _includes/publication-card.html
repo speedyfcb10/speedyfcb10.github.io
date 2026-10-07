@@ -1,0 +1,74 @@
+{%- comment -%}
+  One publication card on /publications/; entries live in _data/publications.yml.
+  Usage: {% include publication-card.html pub=pub %}
+{%- endcomment -%}
+{%- assign pub = include.pub -%}
+{%- capture pub_authors -%}
+  {%- for author in pub.authors -%}
+    {%- unless forloop.first -%}
+      {%- if forloop.length == 2 -%}{{ " and " }}{%- elsif forloop.last -%}{{ ", and " }}{%- else -%}{{ ", " }}{%- endif -%}
+    {%- endunless -%}
+    {%- assign author_html = author | escape | replace: "†", "<sup>†</sup>" | replace: "*", "<sup>*</sup>" -%}
+    {%- assign author_plain = author | remove: "†" | remove: "*" | strip -%}
+    {%- if author_plain == site.author.name -%}
+      {%- assign me_name = site.author.name | escape -%}
+      {%- assign me_html = '<span class="pub-card__me">' | append: me_name | append: '</span>' -%}
+      {%- assign author_html = author_html | replace: me_name, me_html -%}
+    {%- endif -%}
+    {{- author_html -}}
+  {%- endfor -%}
+{%- endcapture -%}
+{%- assign pub_pdf = pub.pdf | strip -%}
+{%- assign pub_abstract = pub.abstract | strip -%}
+{%- assign pub_code = pub.code | strip -%}
+{%- assign pub_note = pub.note | strip -%}
+{%- assign pub_venue = pub.venue | strip -%}
+{%- comment -%} A PDF on this site that has not been uploaded yet keeps the button gray {%- endcomment -%}
+{%- unless pub_pdf == "" or pub_pdf contains "://" -%}
+  {%- assign pub_pdf_path = pub_pdf -%}
+  {%- assign pub_pdf_head = pub_pdf_path | slice: 0 -%}
+  {%- if pub_pdf_head != "/" -%}{%- assign pub_pdf_path = pub_pdf_path | prepend: "/" -%}{%- endif -%}
+  {%- assign pub_pdf_file = site.static_files | where: "path", pub_pdf_path | first -%}
+  {%- unless pub_pdf_file -%}{%- assign pub_pdf = "" -%}{%- endunless -%}
+{%- endunless -%}
+{%- capture pub_card_number -%}{%- increment pub_card_counter -%}{%- endcapture -%}
+{%- assign pub_abstract_id = pub.title | slugify | prepend: "abstract-" | append: "-" | append: pub_card_number -%}
+<article class="pub-card">
+  <div class="pub-card__media">
+    {%- include image-with-placeholder.html src=pub.image alt=pub.image_alt -%}
+  </div>
+  <div class="pub-card__body">
+    <h3 class="pub-card__title">{{ pub.title | escape }}</h3>
+    <p class="pub-card__authors">{{ pub_authors }}</p>
+    {%- if pub_note != "" %}
+    <p class="pub-card__note">{{ pub_note | escape | replace: "†", "<sup>†</sup>" | replace: "*", "<sup>*</sup>" }}</p>
+    {%- endif %}
+    {%- if pub_venue != "" %}
+    <p class="pub-card__venue">{{ pub_venue | markdownify | remove: "<p>" | remove: "</p>" | strip }}</p>
+    {%- endif %}
+    <div class="pub-card__buttons">
+      {%- if pub_pdf != "" %}
+      <a class="pub-btn" href="{{ pub_pdf | absolute_url }}" target="_blank" rel="noopener">PDF</a>
+      {%- else %}
+      <span class="pub-btn pub-btn--disabled">PDF<span class="visually-hidden"> (not available yet)</span></span>
+      {%- endif %}
+      {%- if pub_abstract != "" %}
+      <button type="button" class="pub-btn" aria-expanded="false" aria-controls="{{ pub_abstract_id }}" data-abstract-toggle>Abstract</button>
+      {%- else %}
+      <span class="pub-btn pub-btn--disabled">Abstract<span class="visually-hidden"> (not available yet)</span></span>
+      {%- endif %}
+      {%- if pub_code != "" %}
+      <a class="pub-btn" href="{{ pub_code | absolute_url }}" target="_blank" rel="noopener">Code</a>
+      {%- endif %}
+      {%- for link in pub.links %}
+      {%- assign link_url = link.url | strip %}
+      {%- if link_url != "" %}
+      <a class="pub-btn" href="{{ link_url | absolute_url }}" target="_blank" rel="noopener">{{ link.label | default: "Link" | escape }}</a>
+      {%- endif %}
+      {%- endfor %}
+    </div>
+    {%- if pub_abstract != "" %}
+    <div class="pub-card__abstract" id="{{ pub_abstract_id }}" hidden>{{ pub_abstract | markdownify }}</div>
+    {%- endif %}
+  </div>
+</article>

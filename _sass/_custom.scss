@@ -1,0 +1,889 @@
+/* ==========================================================================
+   SITE CUSTOMIZATIONS
+
+   All site-specific styling lives in this one partial. It is imported last
+   from assets/css/main.scss, so its rules win over the theme. The look is
+   modeled on https://joonkyung-kim.github.io: serif headings, sans-serif text,
+   light rounded cards and a profile card in the sidebar.
+
+   The fonts are loaded in _includes/head/custom.html.
+   ========================================================================== */
+
+$site-serif  : "Source Serif 4", Georgia, "Times New Roman", serif;
+$site-sans   : "Inter", -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+$site-radius : 8px;
+
+/* Shared surface for every card on the site */
+@mixin site-card {
+  background: var(--site-card-bg);
+  border: 1px solid var(--global-border-color);
+  border-radius: $site-radius;
+  box-shadow: var(--site-card-shadow);
+}
+
+/* Link inside running text: accent color with a dotted underline */
+@mixin site-inline-link {
+  color: var(--global-link-color);
+  text-decoration-line: underline;
+  text-decoration-style: dotted;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color 0.15s;
+
+  &:hover {
+    color: var(--global-link-color-hover);
+    text-decoration-style: solid;
+  }
+}
+
+
+/*
+   Colors: light theme, then the dark theme (toggle in the masthead or OS setting)
+   ========================================================================== */
+
+:root {
+  --global-text-color                : #1a1a1a;
+  --global-border-color              : #d5d5d5;
+  --global-link-color                : #324aa8;
+  --global-link-color-hover          : #22336f;
+  --global-masthead-link-color       : #1a1a1a;
+  --global-masthead-link-color-hover : #324aa8;
+
+  --site-text-muted        : #555;
+  --site-rule-strong       : #ababab;
+  --site-accent-soft       : #9aa8d4;
+  --site-card-bg           : #fff;
+  --site-card-shadow       : 0 1px 2px rgba(20, 24, 40, 0.05), 0 2px 8px rgba(20, 24, 40, 0.04);
+  --site-card-shadow-hover : 0 2px 4px rgba(20, 24, 40, 0.07), 0 8px 20px rgba(20, 24, 40, 0.08);
+  --site-placeholder-bg    : #eceef1;
+  --site-placeholder-icon  : #b5bac1;
+  --site-button-bg         : #324aa8;
+  --site-button-bg-hover   : #22336f;
+  --site-button-text       : #fff;
+  --site-button-tint       : #eef1fa;
+  --site-text-faint        : #8a8a8a;
+  --site-note-bg           : #f4f5f6;
+  --site-abstract-bg       : #f6f8fc;
+  --site-abstract-border   : #dfe5f1;
+}
+
+html[data-theme="dark"] {
+  --global-border-color              : #5f5f5f;
+  --global-link-color                : #a9baf3;
+  --global-link-color-hover          : #d4dcfa;
+  --global-masthead-link-color-hover : #a9baf3;
+
+  --site-text-muted        : #d2d2d2;
+  --site-rule-strong       : #8c8c8c;
+  --site-accent-soft       : #7586c4;
+  --site-card-bg           : #3d3d3d;
+  --site-card-shadow       : none;
+  --site-card-shadow-hover : 0 6px 18px rgba(0, 0, 0, 0.35);
+  --site-placeholder-bg    : #545454;
+  --site-placeholder-icon  : #7b7b7b;
+  --site-button-bg         : #a9baf3;
+  --site-button-bg-hover   : #d4dcfa;
+  --site-button-text       : #1a1a1a;
+  --site-button-tint       : #414658;
+  --site-text-faint        : #a3a3a3;
+  --site-note-bg           : #3d3d3d;
+  --site-abstract-bg       : #3a3d44;
+  --site-abstract-border   : #575d6a;
+}
+
+
+/*
+   Typography
+   ========================================================================== */
+
+body,
+.masthead__inner-wrap,
+.sidebar p,
+.sidebar li,
+.author__urls-wrapper,
+.page__footer-copyright {
+  font-family: $site-sans;
+}
+
+h1, h2, h3, h4, h5, h6,
+.page__title,
+.archive__item-title {
+  font-family: $site-serif;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.page__title {
+  font-size: 1.4em;
+  line-height: 1.15;
+}
+
+
+/*
+   Masthead
+   ========================================================================== */
+
+.masthead__menu-item--lg {
+  padding-right: 0;
+}
+
+.greedy-nav {
+  .visible-links .masthead__menu-item a,
+  .hidden-links a {
+    font-family: $site-serif;
+    font-weight: 600;
+  }
+
+  .visible-links .masthead__menu-item a {
+    margin: 0 0.3rem;
+    padding: 0.22rem 0.7rem;
+    font-size: 1.1em;
+  }
+
+  .visible-links .masthead__menu-item--lg a {
+    margin: 0 1rem 0 0;
+    padding: 0.5rem 0;
+    font-size: 1.2em;
+  }
+
+  .visible-links #theme-toggle a {
+    margin: 0 0 0 0.5rem;
+    padding: 0.5rem 0;
+  }
+
+  /* Current page: keep the theme's hover bar visible instead of a thin border */
+  .visible-links .masthead__menu-item.selected a:before {
+    background: var(--global-dark-border-color);
+    transform: scaleX(1);
+  }
+
+  .visible-links .masthead__menu-item--lg.selected a:before {
+    transform: scaleX(0);
+  }
+}
+
+.masthead__menu-item.selected a,
+.masthead__menu-item.selected a:hover {
+  font-weight: 600;
+  border-bottom: 0;
+}
+
+/* Line the first menu tab up with the left edge of the page content */
+@include breakpoint($large) {
+  .greedy-nav .visible-links .masthead__menu-item--lg {
+    width: calc((#{$large} - 2em) * 0.2119 - 1rem);
+  }
+}
+
+@include breakpoint($x-large) {
+  .greedy-nav .visible-links .masthead__menu-item--lg {
+    width: calc((#{$x-large} - 2em) * 0.2119 - 1rem);
+  }
+}
+
+
+/*
+   Sidebar profile card
+   ========================================================================== */
+
+.author__card {
+  @include site-card;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.85rem 1rem;
+
+  @include breakpoint($large) {
+    display: block;
+    padding: 1.1rem 1rem 1.2rem;
+  }
+}
+
+.author__avatar {
+  display: block;
+  flex: 0 0 64px;
+  width: 64px;
+
+  @include breakpoint($large) {
+    width: auto;
+  }
+
+  img,
+  .img-placeholder {
+    width: 100%;
+    max-width: 175px;
+    height: auto;
+    aspect-ratio: 1;
+    margin: 0 auto;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+  }
+
+  img {
+    display: block;
+    object-fit: cover;
+  }
+
+  img[hidden] {
+    display: none;
+  }
+
+  .img-placeholder {
+    font-size: 1.6rem;
+
+    @include breakpoint($large) {
+      font-size: 3rem;
+    }
+  }
+}
+
+.author__content {
+  display: block;
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0;
+  line-height: 1.3;
+}
+
+.sidebar .author__name {
+  font-family: $site-serif;
+  font-size: 1.05em;
+  font-weight: 600;
+}
+
+/* Break long lines evenly ("University of / Wisconsin–Madison", not "...Wisconsin– / Madison") */
+.author__name,
+.author__bio {
+  text-wrap: balance;
+}
+
+.author__urls-wrapper {
+  display: block;
+  margin-left: auto;
+
+  @include breakpoint($large) {
+    margin-left: 0;
+  }
+
+  /* "Follow" button on small screens; !important only to beat the theme's own on .btn--inverse */
+  .btn--inverse {
+    padding: 0.4em 0.9em;
+    border-color: var(--site-rule-strong) !important;
+    border-radius: 6px;
+    color: var(--site-text-muted) !important;
+    font-family: $site-sans;
+    font-weight: 600;
+
+    &:hover,
+    &.open {
+      border-color: var(--global-link-color) !important;
+      background-color: var(--global-bg-color);
+      color: var(--global-link-color) !important;
+    }
+  }
+}
+
+.author__urls {
+  &:after {
+    border-color: var(--global-bg-color) transparent;
+  }
+
+  /* Let long lines wrap in the desktop card; the mobile dropdown sizes itself to one-line items.
+     (text-wrap is a shorthand that would also undo the theme's nowrap, so it stays in here too.) */
+  li {
+    @include breakpoint($large) {
+      white-space: normal;
+      text-wrap: balance;
+    }
+  }
+
+  /* Icons sit in their own column so wrapped text lines up with the first line */
+  a {
+    display: flex;
+    align-items: baseline;
+    color: var(--site-text-muted);
+
+    &:hover {
+      color: var(--global-link-color);
+    }
+  }
+}
+
+@media screen and (min-width: $sidebar-screen-min-width) {
+  .sidebar .author__desktop {
+    display: flex;
+    align-items: baseline;
+  }
+
+  /* The fixed sidebar ends at the bottom of the window and can scroll the card clear of the fixed footer */
+  .sidebar {
+    height: calc(100vh - 2em);
+    padding-bottom: 5.5rem;
+  }
+}
+
+/* Between $large and the fixed-sidebar width the sidebar is sticky and in the page flow,
+   so the masthead padding the menu script sets inline would push the card below the content */
+@media screen and (min-width: $large) and (max-width: $sidebar-screen-min-width - 1) {
+  .sidebar {
+    padding-top: 0 !important;
+  }
+
+  .sidebar.sticky {
+    top: calc(#{$masthead-height} + 2em);
+  }
+}
+
+
+/*
+   Home page: About card, research experience
+   ========================================================================== */
+
+/* Long unbreakable strings (URLs, DOIs) wrap instead of running out of the cards */
+.about-card,
+.pub-card__body,
+.entry-card {
+  overflow-wrap: break-word;
+}
+
+.about-card {
+  @include site-card;
+  margin-bottom: 0.85rem;
+  padding: 1.3rem 1.4rem;
+  font-size: 0.9em;
+  line-height: 1.65;
+
+  > :first-child {
+    margin-top: 0;
+  }
+
+  > :last-child {
+    margin-bottom: 0;
+  }
+
+  a {
+    @include site-inline-link;
+  }
+}
+
+/* "Research Interests": a section heading (h2) styled as a subheading inside the card */
+.page__content .about-card h2 {
+  margin: 1.6rem 0 0.5rem;
+  padding-bottom: 0;
+  border-bottom: 0;
+  font-size: 1.17em;
+}
+
+.page__content .about-keywords {
+  margin-bottom: 0;
+  color: var(--site-text-muted);
+  font-style: italic;
+  font-weight: 600;
+}
+
+.about-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.1rem;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.95em;
+
+  li {
+    margin: 0;
+  }
+
+  .about-card & a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--site-text-muted);
+    text-decoration: none;
+    white-space: nowrap;
+
+    span {
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-decoration-color: var(--site-rule-strong);
+      text-underline-offset: 3px;
+    }
+
+    &:hover {
+      color: var(--global-link-color);
+
+      span {
+        text-decoration-color: currentColor;
+      }
+    }
+  }
+}
+
+.page__content .about-section-title {
+  margin: 2.5rem 0 1rem;
+  padding-bottom: 0;
+  border-bottom: 0;
+  font-size: 1.4em;
+}
+
+.exp-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  .exp-list__item {
+    margin: 0;
+    padding: 0.85rem 0;
+    border-top: 1px solid var(--global-border-color);
+
+    &:first-child {
+      padding-top: 0;
+      border-top: 0;
+    }
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+  }
+
+  .exp-list__desc {
+    margin: 0.15rem 0 0;
+  }
+}
+
+/* The dates stay on the first line at the right; a long name wraps in its own column */
+.exp-list__head,
+.entry-card__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0 1rem;
+}
+
+.exp-list__org,
+.entry-card__title {
+  flex: 1 1 auto;
+  min-width: 0;
+  text-wrap: balance;
+}
+
+.exp-list__dates,
+.entry-card__dates {
+  flex: 0 0 auto;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+/* On small phones a date that does not fit moves under the name, still aligned right */
+@include breakpoint(max-width 25em) {
+  .exp-list__head,
+  .entry-card__head {
+    flex-wrap: wrap;
+  }
+
+  .exp-list__dates,
+  .entry-card__dates {
+    margin-left: auto;
+  }
+}
+
+.exp-list__org {
+  font-weight: 600;
+}
+
+.exp-list__dates {
+  color: var(--site-text-muted);
+  font-size: 0.9em;
+}
+
+.exp-list__advisor {
+  color: var(--site-text-muted);
+  font-size: 0.92em;
+}
+
+
+/*
+   Publications page
+   ========================================================================== */
+
+.pub-intro a {
+  @include site-inline-link;
+
+  i {
+    margin-right: 0.3em;
+  }
+}
+
+.archive .pub-year {
+  margin: 1.6rem 0 0.7rem;
+  color: var(--site-text-muted);
+  font-family: $site-sans;
+  font-size: 0.95em;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.pub-list,
+.entry-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.pub-card {
+  @include site-card;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 1rem 1.25rem;
+  padding: 1rem 1.3rem;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+
+  &:hover {
+    border-color: var(--site-accent-soft);
+    box-shadow: var(--site-card-shadow-hover);
+    transform: translateY(-2px);
+  }
+}
+
+.pub-card__media {
+  flex: 0 0 200px;
+  max-width: 100%;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  border-radius: 4px;
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  img[hidden] {
+    display: none;
+  }
+
+  @include breakpoint(max-width $small) {
+    flex-basis: 100%;
+  }
+}
+
+.pub-card__body {
+  flex: 1 1 16rem;
+  min-width: 0;
+}
+
+.archive .pub-card__title {
+  margin: 0 0 0.3rem;
+  font-size: 1.08em;
+  line-height: 1.3;
+}
+
+.pub-card__authors,
+.pub-card__note,
+.pub-card__venue {
+  margin: 0 0 0.15rem;
+  font-size: 0.85em;
+  line-height: 1.5;
+
+  sup {
+    line-height: 0;
+  }
+}
+
+.pub-card__authors,
+.pub-card__note,
+.pub-card__venue {
+  color: var(--site-text-muted);
+}
+
+.pub-card__me {
+  border-bottom: 1px solid currentColor;
+  white-space: nowrap;
+}
+
+.pub-card__note {
+  font-size: 0.75em;
+}
+
+.pub-card__venue {
+  font-style: italic;
+}
+
+/* PDF / Abstract / Code buttons: PDF and Abstract are grayed out when empty; Code and extra links are left out */
+.pub-card__buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.65rem;
+}
+
+.archive .pub-btn {
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+  padding: 0.15rem 0.8rem;
+  border: 1.5px solid var(--global-link-color);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--global-link-color);
+  font-family: $site-sans;
+  font-size: 0.8em;
+  font-weight: 600;
+  line-height: 1.5;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+
+  &[aria-expanded="true"] {
+    background-color: var(--site-button-tint);
+  }
+
+  &:hover {
+    border-color: var(--site-button-bg);
+    background-color: var(--site-button-bg);
+    color: var(--site-button-text);
+    text-decoration: none;
+  }
+
+  &:focus:not(:focus-visible) {
+    outline: 0;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--global-link-color);
+    outline-offset: 2px;
+  }
+
+  &--disabled,
+  &--disabled:hover {
+    border-color: var(--site-rule-strong);
+    background: transparent;
+    color: var(--site-text-faint);
+    cursor: default;
+  }
+}
+
+/* Windows High Contrast replaces the site colors; keep unavailable buttons visibly gray */
+@media (forced-colors: active) {
+  .archive .pub-btn--disabled,
+  .archive .pub-btn--disabled:hover {
+    border-color: GrayText;
+    color: GrayText;
+  }
+}
+
+.pub-card__abstract {
+  margin-top: 0.75rem;
+  padding: 0.85rem 1.1rem;
+  border: 1px solid var(--site-abstract-border);
+  border-radius: 12px;
+  background: var(--site-abstract-bg);
+  font-size: 0.85em;
+  line-height: 1.6;
+
+  &[hidden] {
+    display: none;
+  }
+
+  p {
+    margin: 0 0 0.6em;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  a {
+    @include site-inline-link;
+  }
+}
+
+
+/*
+   Teaching page
+   ========================================================================== */
+
+.entry-list {
+  margin-top: 1rem;
+}
+
+.entry-card {
+  @include site-card;
+  padding: 1rem 1.3rem;
+}
+
+.archive .entry-card__title {
+  margin: 0;
+  font-size: 1.08em;
+  line-height: 1.3;
+}
+
+.entry-card__dates {
+  color: var(--site-text-muted);
+  font-size: 0.85em;
+}
+
+.entry-card__org,
+.entry-card__desc {
+  font-size: 0.85em;
+  line-height: 1.5;
+}
+
+.entry-card__org {
+  margin: 0.2rem 0 0;
+  color: var(--site-text-muted);
+  font-style: italic;
+}
+
+.entry-card__desc {
+  margin: 0.45rem 0 0;
+}
+
+
+/*
+   CV page: download button and embedded PDF (the preview is hidden on phones)
+   ========================================================================== */
+
+.cv-updated {
+  margin: 0 0 1rem;
+  font-style: italic;
+}
+
+.archive .cv-download {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 4px;
+  background-color: var(--site-button-bg);
+  color: var(--site-button-text);
+  font-size: 0.9em;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background-color: var(--site-button-bg-hover);
+    color: var(--site-button-text);
+    text-decoration: none;
+  }
+}
+
+.cv-mobile-note {
+  display: none;
+  padding: 0.9rem 1rem;
+  border-radius: 4px;
+  background-color: var(--site-note-bg);
+  color: var(--site-text-muted);
+  font-size: 0.9em;
+}
+
+.cv-preview {
+  margin-top: 1rem;
+  overflow: hidden;
+  border: 1px solid var(--global-border-color);
+  border-radius: $site-radius;
+
+  iframe {
+    display: block;
+    width: 100%;
+    height: 85vh;
+    min-height: 600px;
+    max-height: 1100px;
+    border: 0;
+  }
+
+  &--missing {
+    max-width: 420px;
+    aspect-ratio: 8.5 / 11;
+    border: 0;
+  }
+}
+
+@include breakpoint(max-width $medium) {
+  .cv-mobile-note {
+    display: block;
+  }
+
+  .cv-preview:not(.cv-preview--missing) {
+    display: none;
+  }
+}
+
+
+/*
+   Footer: the theme's light gray is hard to read on the footer background
+   ========================================================================== */
+
+.page__footer {
+  color: var(--site-text-muted);
+}
+
+
+/*
+   Image placeholder (shown while an image file is missing)
+   ========================================================================== */
+
+.img-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  background: var(--site-placeholder-bg);
+  color: var(--site-placeholder-icon);
+  font-size: 1.75rem;
+  line-height: 1;
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+
+/*
+   Keyboard focus: keep the theme's focus ring clear of the link text
+   ========================================================================== */
+
+.about-links a:focus-visible,
+.pub-intro a:focus-visible {
+  outline-offset: 2px;
+}
+
+.greedy-nav button:focus-visible {
+  outline: 2px solid var(--global-link-color);
+  outline-offset: 2px;
+}
+
+/* Scroll a focused link clear of the fixed footer (fixed above 768px, see layout/_footer.scss) */
+@media screen and (min-width: 769px) {
+  html {
+    scroll-padding-bottom: 6rem;
+  }
+}
+
+
+/*
+   Small screens and reduced motion
+   ========================================================================== */
+
+@include breakpoint(max-width $small) {
+  .about-card,
+  .pub-card,
+  .entry-card {
+    padding: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pub-card {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
+}

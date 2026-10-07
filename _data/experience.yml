@@ -1,0 +1,31 @@
+# Research experience listed on the home page, newest first.
+#
+#   institution  lab and institution, shown in bold
+#   advisor      advisor name
+#   advisor_url  optional advisor homepage; the name is linked when it is set
+#   dates        shown on the right
+#   description  one line
+
+- institution: "Sprocket Lab, UW–Madison"
+  advisor: "Prof. Frederic Sala"
+  advisor_url: "https://pages.cs.wisc.edu/~fredsala/"
+  dates: "Nov 2025 – Present"
+  description: "Spatiotemporal diffusion models for synthesizing rare geospatial events (GeoDES)."
+
+- institution: "Robotics Lab, Texas A&M University"
+  advisor: "Prof. Yiwei Lyu"
+  advisor_url: "https://yiweilyu-tamu.github.io/homepage/"
+  dates: "Mar 2026 – Sep 2026"
+  description: "Belief-space planning for interactive driving; interaction-informed safe manipulation."
+
+- institution: "Stony Brook University (remote)"
+  advisor: "Prof. Chenyu You"
+  advisor_url: "https://chenyuyou.me/"
+  dates: "May 2026 – Present"
+  description: "Structured tokenization for EEG foundation models."
+
+- institution: "Madison Experimental Mathematics Lab, UW–Madison"
+  advisor: "Prof. Chenxi Wu"
+  advisor_url: "https://wuchenxi.github.io/"
+  dates: "Spring 2026"
+  description: "Topological entropy of post-critically finite polynomial maps."

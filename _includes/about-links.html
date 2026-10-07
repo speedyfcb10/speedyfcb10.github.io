@@ -1,0 +1,18 @@
+{%- comment -%}
+  Row of icon links at the bottom of the About card, built from the author block in _config.yml.
+{%- endcomment -%}
+{%- assign about_cv = site.author.cv | strip -%}
+<ul class="about-links">
+  {%- if site.author.email %}
+  <li><a href="mailto:{{ site.author.email }}"><i class="fas fa-envelope" aria-hidden="true"></i><span>{{ site.author.email | replace: "@", " [at] " }}</span></a></li>
+  {%- endif %}
+  {%- if site.author.googlescholar %}
+  <li><a href="{{ site.author.googlescholar }}"><i class="ai ai-google-scholar" aria-hidden="true"></i><span>Scholar</span></a></li>
+  {%- endif %}
+  {%- if site.author.linkedin %}
+  <li><a href="https://www.linkedin.com/in/{{ site.author.linkedin }}"><i class="fab fa-linkedin" aria-hidden="true"></i><span>LinkedIn</span></a></li>
+  {%- endif %}
+  {%- if about_cv != "" %}
+  <li><a href="{{ about_cv | absolute_url }}"><i class="fas fa-file-pdf" aria-hidden="true"></i><span>CV</span></a></li>
+  {%- endif %}
+</ul>

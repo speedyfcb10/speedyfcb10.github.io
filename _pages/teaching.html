@@ -5,8 +5,16 @@ permalink: /teaching/
 author_profile: true
 ---
 
-{% include base_path %}
-
-{% for post in site.teaching reversed %}
-  {% include archive-single.html %}
-{% endfor %}
+{% comment %} Entries live in _data/teaching.yml {% endcomment %}
+<div class="entry-list">
+  {% for item in site.data.teaching %}
+    <article class="entry-card">
+      <div class="entry-card__head">
+        <h2 class="entry-card__title">{{ item.role | escape }}</h2>
+        <span class="entry-card__dates">{{ item.dates | escape }}</span>
+      </div>
+      {% if item.organization %}<p class="entry-card__org">{{ item.organization | escape }}</p>{% endif %}
+      {% if item.description %}<p class="entry-card__desc">{{ item.description | markdownify | remove: "<p>" | remove: "</p>" | strip }}</p>{% endif %}
+    </article>
+  {% endfor %}
+</div>

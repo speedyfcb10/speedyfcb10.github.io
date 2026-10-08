@@ -9,8 +9,9 @@ redirect_from:
 
 <div class="about-card" markdown="1">
 
-I am a final-year undergraduate at the University of Wisconsin–Madison, majoring in Computer Science (Honors) and Mathematics. 
-I work with Prof. [Frederic Sala](https://pages.cs.wisc.edu/~fredsala/) in the Sprocket Lab on generative models of spatiotemporal physical dynamics. I have also worked with Prof. [Yiwei Lyu](https://yiweilyu-tamu.github.io/homepage/) at Texas A&M University on uncertainty-aware planning and safe manipulation, and with Prof. [Chenyu You](https://chenyuyou.me/) at Stony Brook University on EEG foundation models.
+I am a final-year undergraduate at the University of Wisconsin–Madison, majoring in Computer Science (Honors) and Mathematics.
+
+I work with Prof. [Frederic Sala](https://pages.cs.wisc.edu/~fredsala/) in the Sprocket Lab on generative models of spatiotemporal physical dynamics. I have also worked with Prof. [Yiwei Lyu](https://yiweilyu-tamu.github.io/homepage/) at Texas A&M University on uncertainty-aware planning and safe manipulation, and with Prof. [Chenyu You](https://chenyuyou.me/) at Stony Brook University on EEG foundation models.(https://chenyuyou.me/) at Stony Brook University on EEG foundation models.
 
 **I am applying to Ph.D. programs for Fall 2027.**
 

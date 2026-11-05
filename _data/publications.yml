@@ -25,7 +25,7 @@
   note: "† Equal contribution, * Corresponding author"
   venue: "Under review at ICRA 2027"
   image: "publications/probe_act.png"
-  pdf:        # TODO: no PDF yet; the PDF button stays gray until a link is added here
+  pdf: "https://arxiv.org/pdf/2611.02240"   # PDF of https://arxiv.org/abs/2611.02240
   abstract: |-
     Safe navigation in interactive traffic requires autonomous vehicles to reason about unobservable
     human characteristics and the reciprocal nature of multi-agent interactions. Traditional

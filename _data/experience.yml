@@ -24,8 +24,9 @@
   dates: "May 2026 – Present"
   description: "Structured tokenization for EEG foundation models."
 
-- institution: "Madison Experimental Mathematics Lab, UW–Madison"
-  advisor: "Prof. Chenxi Wu"
-  advisor_url: "https://wuchenxi.github.io/"
-  dates: "Spring 2026"
-  description: "Topological entropy of post-critically finite polynomial maps."
+- institution: "NeuroErgoLab, UW–Madison"
+  advisor: "Prof. Ranjana Mehta"
+  dates: "Sep 2025 – May 2026"
+  description: >-
+    Wearable physiological signal processing.
+    [\[UW–Madison Undergraduate Symposium Poster\]](/files/YouranWang-PPG.pdf){:target="_blank" rel="noopener"}
